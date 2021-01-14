@@ -208,8 +208,8 @@ func (f *Forward) isAllowedDomain(name string) bool {
 
 func (f *Forward) isAllowedType(name string) bool {
 	for _, ignore := range f.ignoredTypes {
-		fmt.Println(name, ignore)
 		if plugin.Type(ignore).Matches(name) {
+			fmt.Println(name, ignore)
 			return false
 		}
 	}
