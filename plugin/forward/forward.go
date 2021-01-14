@@ -207,13 +207,8 @@ func (f *Forward) isAllowedDomain(name string) bool {
 }
 
 func (f *Forward) isAllowedType(name string) bool {
-	if dns.Type(dns.StringToType[name]) == dns.Type(dns.StringToType[f.from]) {
-		return true
-	}
-
-	fmt.Println(name, f.from)
 	for _, ignore := range f.ignoredTypes {
-		fmt.Println(ignore)
+		fmt.Println(name, ignore)
 		if plugin.Type(ignore).Matches(name) {
 			return false
 		}
