@@ -54,6 +54,18 @@ func (n Name) Matches(child string) bool {
 // Normalize lowercases and makes n fully qualified.
 func (n Name) Normalize() string { return strings.ToLower(dns.Fqdn(string(n))) }
 
+// Type represents a domain name.
+type Type string
+
+// Matches checks to see if other is a subdomain (or the same domain) of n.
+// This method assures that names can be easily and consistently matched.
+func (n Type) Matches(child string) bool {
+	return dns.StringToType[strings.ToUpper(string(n))] == dns.StringToType[strings.ToUpper(child)]
+}
+
+// Normalize lowercases and makes n fully qualified.
+func (n Type) Normalize() string { return strings.ToUpper(string(n)) }
+
 type (
 	// Host represents a host from the Corefile, may contain port.
 	Host string

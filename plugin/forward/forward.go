@@ -32,8 +32,9 @@ type Forward struct {
 	p          Policy
 	hcInterval time.Duration
 
-	from    string
-	ignored []string
+	from         string
+	ignored      []string
+	ignoredTypes []string
 
 	tlsConfig     *tls.Config
 	tlsServerName string
@@ -184,7 +185,7 @@ func (f *Forward) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg
 }
 
 func (f *Forward) match(state request.Request) bool {
-	if !plugin.Name(f.from).Matches(state.Name()) || !f.isAllowedDomain(state.Name()) {
+	if !plugin.Name(f.from).Matches(state.Name()) || !f.isAllowedDomain(state.Name()) || !f.isAllowedType(state.Type()) {
 		return false
 	}
 
@@ -198,6 +199,19 @@ func (f *Forward) isAllowedDomain(name string) bool {
 
 	for _, ignore := range f.ignored {
 		if plugin.Name(ignore).Matches(name) {
+			return false
+		}
+	}
+	return true
+}
+
+func (f *Forward) isAllowedType(name string) bool {
+	if dns.Type(dns.StringToType[name]) == dns.Type(dns.StringToType[f.from]) {
+		return true
+	}
+
+	for _, ignore := range f.ignoredTypes {
+		if plugin.Type(ignore).Matches(name) {
 			return false
 		}
 	}
