@@ -160,7 +160,7 @@ func parseBlock(c *caddy.Controller, f *Forward) error {
 			return c.ArgErr()
 		}
 		for i := 0; i < len(ignore); i++ {
-			ignore[i] = plugin.Host(ignore[i]).Normalize()
+			ignore[i] = plugin.Type(ignore[i]).Normalize()
 		}
 		f.ignoredTypes = ignore
 	case "max_fails":
