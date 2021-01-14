@@ -8,6 +8,7 @@ import (
 	"context"
 	"crypto/tls"
 	"errors"
+	"fmt"
 	"sync/atomic"
 	"time"
 
@@ -210,7 +211,9 @@ func (f *Forward) isAllowedType(name string) bool {
 		return true
 	}
 
+	fmt.Println(name, f.from)
 	for _, ignore := range f.ignoredTypes {
+		fmt.Println(ignore)
 		if plugin.Type(ignore).Matches(name) {
 			return false
 		}
