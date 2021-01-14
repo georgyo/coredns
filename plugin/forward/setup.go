@@ -154,6 +154,15 @@ func parseBlock(c *caddy.Controller, f *Forward) error {
 			ignore[i] = plugin.Host(ignore[i]).Normalize()
 		}
 		f.ignored = ignore
+	case "except_type":
+		ignore := c.RemainingArgs()
+		if len(ignore) == 0 {
+			return c.ArgErr()
+		}
+		for i := 0; i < len(ignore); i++ {
+			ignore[i] = plugin.Type(ignore[i]).Normalize()
+		}
+		f.ignoredTypes = ignore
 	case "max_fails":
 		if !c.NextArg() {
 			return c.ArgErr()
