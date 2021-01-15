@@ -9,6 +9,7 @@ import (
 	_ "github.com/coredns/coredns/plugin/cache"
 	_ "github.com/coredns/coredns/plugin/chaos"
 	_ "github.com/coredns/coredns/plugin/dnssec"
+	_ "github.com/coredns/coredns/plugin/file"
 	_ "github.com/coredns/coredns/plugin/forward"
 	_ "github.com/coredns/coredns/plugin/reload"
 	_ "github.com/coredns/coredns/plugin/rewrite"

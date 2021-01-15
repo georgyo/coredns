@@ -18,6 +18,7 @@ var Directives = []string{
 	"dnssec",
 	"rewrite",
 	"records",
+	"file",
 	"alternate",
 	"forward",
 }
